@@ -1,19 +1,41 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
+import logo from "./logo.png";
 import "./App.scss";
-import {getApi, postApi, signOut} from "./api"
+import { getVisitors, postApi, signOut } from "./api";
+import VisitorList from "./VisitorList";
 
-// curl -H "X-Api-Key: a9bcae20371ea29613ac" -g "https://mini-visitors-service.herokuapp.com/api/entries"
-
-function App() {
+const App = () => {
   const [result, setResult] = useState("");
   const [post, setPost] = useState("");
   const [signout, setSignout] = useState("");
+  const [visitors, setVisitors] = useState([]);
+
+  const getAllVistors = async () => {
+    const response = await getVisitors();
+    const visitorData = response.data.map(({ id, attributes }) => {
+      return {
+        id,
+        name: attributes.name,
+        notes: attributes.notes,
+        signOut: attributes.sign_out
+      };
+    });
+    setVisitors(visitorData);
+  };
+
   const test = () => {
-    getApi().then(resp => {
+    getAllVistors().then(resp => {
       setResult(resp);
     });
   };
+
+  useEffect(() => {
+    // by separating all the API requests as individual functions, i am essentially making a IIFE for an async function.
+    // i'm trying to do "top-level await"
+    // https://v8.dev/features/top-level-await
+    getAllVistors();
+  }, []);
+
   return (
     <div className="App">
       <button onClick={test}>
@@ -31,8 +53,14 @@ function App() {
         test signout
       </button>
       <pre>{JSON.stringify(signout, undefined, 2)}</pre>
+      <header>
+        <img height="50" width="50" alt="logo" src={logo} />
+        <input placeholder="Search" />
+        <button>New Visitor</button>
+      </header>
+      <VisitorList data={visitors} />
     </div>
   );
-}
+};
 
 export default App;

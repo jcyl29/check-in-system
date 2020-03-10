@@ -2,7 +2,7 @@ const baseUrl = "https://mini-visitors-service.herokuapp.com/api/entries";
 
 const apiKey = process.env.REACT_APP_X_API_KEY;
 
-const getApi = async () => {
+const getVisitors = async () => {
   const response = await fetch(baseUrl, {
     method: "GET",
     headers: { "X-Api-Key": apiKey },
@@ -48,4 +48,4 @@ const signOut = async () => {
   return await response.json();
 };
 
-export { getApi, postApi, signOut };
+export { getVisitors, postApi, signOut };
