@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 const VisitorList = ({ data }) => {
   const renderRows = () =>
-    data.map(({ name, notes, signOut }) => {
+    data.map(({ id, name, notes, signOut }) => {
       return (
-        <tr>
+        <tr key={id}>
           <td>{name}</td>
           <td>{notes}</td>
-          <td>{signOut || 'did not sign out yet'}</td>
+          <td>{signOut || "did not sign out yet"}</td>
         </tr>
       );
     });

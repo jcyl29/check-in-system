@@ -1,6 +1,8 @@
+@import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
 
-
-.App {
-
+dialog {
+  width: 80%;
+  top: 50%;
+  overflow: hidden;
+  transform: translateY(-50%);
 }
-
