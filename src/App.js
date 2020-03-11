@@ -5,6 +5,7 @@ import './dialog-polyfill.css';
 import { getVisitors, addVisitor, signOut } from './api';
 import VisitorList from './VisitorList';
 import NewVisitorDialog from './newVisitorDialog';
+import SearchVisitor from './searchVisitor';
 
 const App = () => {
   const [visitors, setVisitors] = useState([]);
@@ -39,14 +40,16 @@ const App = () => {
     // by separating all the API requests as individual functions, i am essentially making a IIFE for an async function.
     // i'm trying to do "top-level await"
     // https://v8.dev/features/top-level-await
-    getAllVisitors();
+
+    // unocmment later
+    // getAllVisitors();
   }, []);
 
   return (
     <div className="App">
       <header>
         <img height="50" width="50" alt="logo" src={logo} />
-        <input placeholder="Search" />
+        <SearchVisitor />
         <button onClick={() => setShowDialog(true)}>New Visitor</button>
       </header>
       <VisitorList data={visitors} signOutVisitor={signOutVisitor} />
@@ -55,6 +58,7 @@ const App = () => {
         setShowDialog={setShowDialog}
         addNewVisitor={addNewVisitor}
       />
+
     </div>
   );
 };
