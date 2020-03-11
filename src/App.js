@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.png";
-import "./App.scss";
-import "./dialog-polyfill.css";
-import { getVisitors, postApi, signOut } from "./api";
-import VisitorList from "./VisitorList";
-import NewVisitorDialog from "./newVisitorDialog";
+import React, { useEffect, useState } from 'react';
+import logo from './logo.png';
+import './App.scss';
+import './dialog-polyfill.css';
+import { getVisitors, addVisitor, signOut } from './api';
+import VisitorList from './VisitorList';
+import NewVisitorDialog from './newVisitorDialog';
 
 const App = () => {
   // to delete
-  const [result, setResult] = useState("");
-  const [post, setPost] = useState("");
-  const [signout, setSignout] = useState("");
+  const [result, setResult] = useState('');
+  const [post, setPost] = useState('');
+  const [signout, setSignout] = useState('');
 
   const [visitors, setVisitors] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
 
-  const getAllVistors = async () => {
+  const getAllVisitors = async () => {
     const response = await getVisitors();
     const visitorData = response.data.map(({ id, attributes }) => {
       return {
@@ -29,17 +29,22 @@ const App = () => {
   };
 
   const test = () => {
-    getAllVistors().then(resp => {
-      // debugger
+    getAllVisitors().then(resp => {
       setResult(resp);
     });
   };
+
+  const addNewVisitor = ({name, notes}) => {
+      return addVisitor({ name, notes }).then(() => {
+        getAllVisitors();
+      });
+  }
 
   useEffect(() => {
     // by separating all the API requests as individual functions, i am essentially making a IIFE for an async function.
     // i'm trying to do "top-level await"
     // https://v8.dev/features/top-level-await
-    getAllVistors();
+    getAllVisitors();
   }, []);
 
   return (
@@ -49,7 +54,7 @@ const App = () => {
         reload.
       </button>
       <pre>{JSON.stringify(result, undefined, 2)}</pre>
-      <button onClick={() => postApi().then(resp => setPost(resp))}>
+      <button onClick={() => addVisitor().then(resp => setPost(resp))}>
         test add user
       </button>
       <pre>{JSON.stringify(post, undefined, 2)}</pre>
@@ -63,7 +68,7 @@ const App = () => {
         <button onClick={() => setShowDialog(true)}>New Visitor</button>
       </header>
       <VisitorList data={visitors} />
-      <NewVisitorDialog show={showDialog} setShowDialog={setShowDialog} /> 
+      <NewVisitorDialog show={showDialog} setShowDialog={setShowDialog} addNewVisitor={addNewVisitor} /> 
       <pre>
         showDialog:
         {JSON.stringify(showDialog, undefined, 2)}

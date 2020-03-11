@@ -1,28 +1,28 @@
-const baseUrl = "https://mini-visitors-service.herokuapp.com/api/entries";
+const baseUrl = 'https://mini-visitors-service.herokuapp.com/api/entries';
 
 const apiKey = process.env.REACT_APP_X_API_KEY;
 
 const getVisitors = async () => {
   const response = await fetch(baseUrl, {
-    method: "GET",
-    headers: { "X-Api-Key": apiKey },
-    mode: "cors"
+    method: 'GET',
+    headers: { 'X-Api-Key': apiKey },
+    mode: 'cors'
   });
 
   return response.json();
 };
 
-const postApi = async () => {
+const addVisitor = async ({name, notes}) => {
   const response = await fetch(baseUrl, {
-    method: "POST",
-    headers: { "X-Api-Key": apiKey, "Content-Type": "application/json" },
-    mode: "cors",
+    method: 'POST',
+    headers: { 'X-Api-Key': apiKey, 'Content-Type': 'application/json' },
+    mode: 'cors',
     body: JSON.stringify({
       data: {
-        type: "entries",
+        type: 'entries',
         attributes: {
-          name: "Dennis Pavao",
-          notes: "some notes"
+          name,
+          notes
         }
       }
     })
@@ -34,13 +34,13 @@ const postApi = async () => {
 const signOut = async () => {
   const url = `${baseUrl}/sign_out`;
   const response = await fetch(url, {
-    method: "POST",
-    headers: { "X-Api-Key": apiKey, "Content-Type": "application/json" },
-    mode: "cors",
+    method: 'POST',
+    headers: { 'X-Api-Key': apiKey, 'Content-Type': 'application/json' },
+    mode: 'cors',
     body: JSON.stringify({
       data: {
-        type: "entries",
-        id: "475"
+        type: 'entries',
+        id: '475'
       }
     })
   });
@@ -48,4 +48,4 @@ const signOut = async () => {
   return await response.json();
 };
 
-export { getVisitors, postApi, signOut };
+export { getVisitors, addVisitor, signOut };

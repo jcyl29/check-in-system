@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from "react";
-import dialogPolyfill from "dialog-polyfill";
+import React, { useEffect, useRef } from 'react';
+import dialogPolyfill from 'dialog-polyfill';
+import PropTypes from 'prop-types';
 
-const NewVisitorDialog = ({ show, setShowDialog }) => {
+const NewVisitorDialog = ({ show, setShowDialog, addNewVisitor }) => {
   const dialog = useRef(null);
 
   useEffect(() => {
     dialogPolyfill.registerDialog(dialog.current);
-    dialog.current.addEventListener("close", () => {
+    dialog.current.addEventListener('close', () => {
       // need to update the parent container state representation of this dialog.
       // otherwise this will cause a bug where clicking the same movie after closing
       // dialog won't open the dialog
@@ -22,13 +23,31 @@ const NewVisitorDialog = ({ show, setShowDialog }) => {
     evt.preventDefault();
     const inputs = Array.prototype.filter.call(
       evt.target.elements,
-      node => node.tagName.toLowerCase() === "input"
+      node => node.tagName.toLowerCase() === 'input'
     );
 
+    const name = inputs
+      .reduce((acc, node) => {
+        if (node.placeholder.includes('name')) {
+          return acc.push(node.value) && acc;
+        } else {
+          return acc;
+        }
+      }, [])
+      .join(' ');
+
+    const notes = inputs.reduce((acc, node) => {
+      if (node.placeholder === 'notes') {
+        return (acc += node.value);
+      } else {
+        return acc;
+      }
+    }, '');
+
     if (inputs.every(node => !!node.value.trim())) {
-      console.log("user filled in everything");
-    } else {
-      console.log("user left some fields blank");
+      addNewVisitor({ name, notes }).then(() => {
+        closeModal();
+      });
     }
   };
 
@@ -49,6 +68,12 @@ const NewVisitorDialog = ({ show, setShowDialog }) => {
       </form>
     </dialog>
   );
+};
+
+NewVisitorDialog.propTypes = {
+  show: PropTypes.bool.isRequired,
+  setShowDialog: PropTypes.func.isRequired,
+  addNewVisitor: PropTypes.func.isRequired
 };
 
 export default NewVisitorDialog;
