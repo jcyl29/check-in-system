@@ -1,14 +1,22 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const VisitorList = ({ data }) => {
+const VisitorList = ({ data, signOutVisitor }) => {
+  const renderSignOutUI = (signOut, id) => {
+    return signOut ? (
+      signOut
+    ) : (
+      <button onClick={() => signOutVisitor(id)}>Sign out</button>
+    );
+  };
+
   const renderRows = () =>
     data.map(({ id, name, notes, signOut }) => {
       return (
         <tr key={id}>
           <td>{name}</td>
           <td>{notes}</td>
-          <td>{signOut || "did not sign out yet"}</td>
+          <td>{renderSignOutUI(signOut, id)}</td>
         </tr>
       );
     });
@@ -34,7 +42,8 @@ VisitorList.propTypes = {
       notes: PropTypes.string,
       signOut: PropTypes.string
     })
-  ).isRequired
+  ).isRequired,
+  signOutVisitor: PropTypes.func.isRequired
 };
 
 export default VisitorList;

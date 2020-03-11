@@ -12,7 +12,7 @@ const getVisitors = async () => {
   return response.json();
 };
 
-const addVisitor = async ({name, notes}) => {
+const addVisitor = async ({ name, notes }) => {
   const response = await fetch(baseUrl, {
     method: 'POST',
     headers: { 'X-Api-Key': apiKey, 'Content-Type': 'application/json' },
@@ -31,7 +31,7 @@ const addVisitor = async ({name, notes}) => {
   return await response.json();
 };
 
-const signOut = async () => {
+const signOut = async id => {
   const url = `${baseUrl}/sign_out`;
   const response = await fetch(url, {
     method: 'POST',
@@ -39,8 +39,8 @@ const signOut = async () => {
     mode: 'cors',
     body: JSON.stringify({
       data: {
-        type: 'entries',
-        id: '475'
+        id,
+        type: 'entries'
       }
     })
   });
