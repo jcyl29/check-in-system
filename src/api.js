@@ -2,8 +2,12 @@ const baseUrl = 'https://mini-visitors-service.herokuapp.com/api/entries';
 
 const apiKey = process.env.REACT_APP_X_API_KEY;
 
-const getVisitors = async () => {
-  const response = await fetch(baseUrl, {
+const getVisitors = async (filterOptions) => {
+  const url = filterOptions.name
+    ? `${baseUrl}?filter[name]=${filterOptions.name}`
+    : baseUrl;
+
+  const response = await fetch(url, {
     method: 'GET',
     headers: { 'X-Api-Key': apiKey },
     mode: 'cors'

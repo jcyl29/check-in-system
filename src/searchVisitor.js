@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import "./App.scss";
-import "./dialog-polyfill.css";
-import useDebounce from "./useDebounce";
+import React, { useEffect, useState } from 'react';
+import './App.scss';
+import './dialog-polyfill.css';
+import useDebounce from './useDebounce';
+import { getVisitors } from './api';
 
 const SearchVisitor = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 500);
 
   const handleOnChange = value => {
@@ -18,7 +19,7 @@ const SearchVisitor = () => {
 
   useEffect(() => {
     if (debouncedSearch) {
-      console.log("in UseEffect string exists", debouncedSearch);
+      getVisitors({ name: debouncedSearch });
     }
   }, [debouncedSearch]);
 
