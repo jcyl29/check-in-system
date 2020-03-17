@@ -11,6 +11,10 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
     );
   };
 
+  const noRows = data.length === 0;
+
+  const renderNoResults = () => <p>No results found</p>;
+
   const renderRows = () => {
     const result = isFilteredBySignout
       ? data.filter(({ signOut }) => signOut)
@@ -27,7 +31,7 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
     });
   };
 
-  return (
+  const renderResultsTable = () => (
     <table>
       <thead>
         <tr>
@@ -39,6 +43,8 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
       <tbody>{renderRows()}</tbody>
     </table>
   );
+
+  return noRows ? renderNoResults() : renderResultsTable();
 };
 
 VisitorList.propTypes = {
