@@ -23,7 +23,7 @@ const SearchVisitor = ({ queryVisitors }) => {
     } else {
       queryVisitors();
     }
-  }, [debouncedSearch, queryVisitors]);
+  }, [debouncedSearch]);
 
   return (
     <>
