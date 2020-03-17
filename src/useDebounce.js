@@ -1,6 +1,6 @@
 // https://usehooks.com/useDebounce/
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default (value, delay) => {
   // State and setters for debounced value

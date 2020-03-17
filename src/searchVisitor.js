@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './App.scss';
 import './dialog-polyfill.css';
 import useDebounce from './useDebounce';
-import { getVisitors } from './api';
+import PropTypes from 'prop-types';
 
-const SearchVisitor = () => {
+const SearchVisitor = ({ queryVisitors }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 500);
 
@@ -19,7 +19,7 @@ const SearchVisitor = () => {
 
   useEffect(() => {
     if (debouncedSearch) {
-      getVisitors({ name: debouncedSearch });
+      queryVisitors({ name: debouncedSearch });
     }
   }, [debouncedSearch]);
 
@@ -35,6 +35,10 @@ const SearchVisitor = () => {
       <pre>searchTerm: {JSON.stringify(searchTerm, 2, undefined)}</pre>
     </form>
   );
+};
+
+SearchVisitor.propTypes = {
+  queryVisitors: PropTypes.bool.isRequired
 };
 
 export default SearchVisitor;

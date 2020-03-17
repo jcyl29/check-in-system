@@ -11,8 +11,8 @@ const App = () => {
   const [visitors, setVisitors] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
 
-  const getAllVisitors = async () => {
-    const response = await getVisitors();
+  const queryVisitors = async (filterOptions = {}) => {
+    const response = await getVisitors(filterOptions);
     const visitorData = response.data.map(({ id, attributes }) => {
       return {
         id,
@@ -26,13 +26,13 @@ const App = () => {
 
   const signOutVisitor = id => {
     signOut(id).then(() => {
-      getAllVisitors();
+      queryVisitors();
     });
   };
 
   const addNewVisitor = ({ name, notes }) => {
     return addVisitor({ name, notes }).then(() => {
-      getAllVisitors();
+      queryVisitors();
     });
   };
 
@@ -41,15 +41,14 @@ const App = () => {
     // i'm trying to do "top-level await"
     // https://v8.dev/features/top-level-await
 
-    // unocmment later
-    // getAllVisitors();
+    queryVisitors();
   }, []);
 
   return (
     <div className="App">
       <header>
         <img height="50" width="50" alt="logo" src={logo} />
-        <SearchVisitor />
+        <SearchVisitor queryVisitors={queryVisitors} />
         <button onClick={() => setShowDialog(true)}>New Visitor</button>
       </header>
       <VisitorList data={visitors} signOutVisitor={signOutVisitor} />
@@ -58,7 +57,6 @@ const App = () => {
         setShowDialog={setShowDialog}
         addNewVisitor={addNewVisitor}
       />
-
     </div>
   );
 };
