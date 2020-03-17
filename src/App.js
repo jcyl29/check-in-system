@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.png';
-import './App.scss';
-import './dialog-polyfill.css';
-import { getVisitors, addVisitor, signOut } from './api';
-import VisitorList from './VisitorList';
-import NewVisitorDialog from './newVisitorDialog';
-import SearchVisitor from './searchVisitor';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.png";
+import "./App.scss";
+import "./dialog-polyfill.css";
+import { getVisitors, addVisitor, signOut } from "./api";
+import VisitorList from "./VisitorList";
+import NewVisitorDialog from "./newVisitorDialog";
+import SearchVisitor from "./searchVisitor";
 
 const App = () => {
   const [visitors, setVisitors] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
+  const [isFilteredBySignout, setIsFilteredBySignout] = useState(false);
 
   const queryVisitors = async (filterOptions = {}) => {
     const response = await getVisitors(filterOptions);
@@ -36,6 +37,10 @@ const App = () => {
     });
   };
 
+  const handleCheckBoxOnChange = evt => {
+    setIsFilteredBySignout(evt.target.checked);
+  };
+
   useEffect(() => {
     // by separating all the API requests as individual functions, i am essentially making a IIFE for an async function.
     // i'm trying to do "top-level await"
@@ -50,8 +55,24 @@ const App = () => {
         <img height="50" width="50" alt="logo" src={logo} />
         <SearchVisitor queryVisitors={queryVisitors} />
         <button onClick={() => setShowDialog(true)}>New Visitor</button>
+        <form>
+          <fieldset>
+            <legend>Filter by:</legend>
+            <input
+              type="checkbox"
+              id="signed-out"
+              onChange={handleCheckBoxOnChange}
+              checked={isFilteredBySignout}
+            />
+            <label htmlFor="signed-out">Signed-out</label>
+          </fieldset>
+        </form>
       </header>
-      <VisitorList data={visitors} signOutVisitor={signOutVisitor} />
+      <VisitorList
+        data={visitors}
+        signOutVisitor={signOutVisitor}
+        isFilteredBySignout={isFilteredBySignout}
+      />
       <NewVisitorDialog
         show={showDialog}
         setShowDialog={setShowDialog}

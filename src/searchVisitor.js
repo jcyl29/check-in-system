@@ -20,25 +20,25 @@ const SearchVisitor = ({ queryVisitors }) => {
   useEffect(() => {
     if (debouncedSearch) {
       queryVisitors({ name: debouncedSearch });
+    } else {
+      queryVisitors();
     }
   }, [debouncedSearch]);
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      <input
-        onChange={evt => handleOnChange(evt.target.value)}
-        placeholder="Search"
-      />
-      <pre>
-        debouncedSearch: {JSON.stringify(debouncedSearch, 2, undefined)}
-      </pre>
-      <pre>searchTerm: {JSON.stringify(searchTerm, 2, undefined)}</pre>
-    </form>
+    <>
+      <form onSubmit={handleOnSubmit}>
+        <input
+          onChange={evt => handleOnChange(evt.target.value)}
+          placeholder="Search full name"
+        />
+      </form>
+    </>
   );
 };
 
 SearchVisitor.propTypes = {
-  queryVisitors: PropTypes.bool.isRequired
+  queryVisitors: PropTypes.func.isRequired
 };
 
 export default SearchVisitor;

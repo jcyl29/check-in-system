@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const VisitorList = ({ data, signOutVisitor }) => {
+const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
   const renderSignOutUI = (signOut, id) => {
     return signOut ? (
       signOut
@@ -10,8 +10,12 @@ const VisitorList = ({ data, signOutVisitor }) => {
     );
   };
 
-  const renderRows = () =>
-    data.map(({ id, name, notes, signOut }) => {
+  const renderRows = () => {
+    const result = isFilteredBySignout
+      ? data.filter(({ signOut }) => signOut)
+      : data;
+
+    return result.map(({ id, name, notes, signOut }) => {
       return (
         <tr key={id}>
           <td>{name}</td>
@@ -20,6 +24,8 @@ const VisitorList = ({ data, signOutVisitor }) => {
         </tr>
       );
     });
+  };
+
   return (
     <table>
       <thead>
@@ -43,7 +49,8 @@ VisitorList.propTypes = {
       signOut: PropTypes.string
     })
   ).isRequired,
-  signOutVisitor: PropTypes.func.isRequired
+  signOutVisitor: PropTypes.func.isRequired,
+  isFilteredBySignout: PropTypes.bool.isRequired
 };
 
 export default VisitorList;
