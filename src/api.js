@@ -1,23 +1,47 @@
+import cache from 'memory-cache';
 const baseUrl = 'https://mini-visitors-service.herokuapp.com/api/entries';
-
 const apiKey = process.env.REACT_APP_X_API_KEY;
 
-const getVisitors = async (filterOptions) => {
+const handleRequest = async (url, fetchOptions) => {
+  // the get visitor and add visitor have the same url, so need
+  // differentiate key with their methods
+  const key = `__cache__${fetchOptions.method}__${url}`;
+  let result = cache.get(key);
+
+
+  if (!result) {
+    const response = await fetch(url, fetchOptions);
+    const isPostRequest = fetchOptions.method === 'POST';
+    result = response.json();
+    if (isPostRequest) {
+      // all GET requests should de-cached whenever a POST operation takes place
+      cache.clear();
+      console.log('POST request clear cache');
+    } else {
+      cache.put(key, result);
+      console.log('GET request add to cache, size=', cache.exportJson());
+    }
+  }
+
+  return result;
+};
+
+const getVisitors = async filterOptions => {
   const url = filterOptions.name
     ? `${baseUrl}?filter[name]=${filterOptions.name}`
     : baseUrl;
 
-  const response = await fetch(url, {
+  const response = await handleRequest(url, {
     method: 'GET',
     headers: { 'X-Api-Key': apiKey },
     mode: 'cors'
   });
 
-  return response.json();
+  return response;
 };
 
 const addVisitor = async ({ name, notes }) => {
-  const response = await fetch(baseUrl, {
+  return await handleRequest(baseUrl, {
     method: 'POST',
     headers: { 'X-Api-Key': apiKey, 'Content-Type': 'application/json' },
     mode: 'cors',
@@ -31,13 +55,11 @@ const addVisitor = async ({ name, notes }) => {
       }
     })
   });
-
-  return await response.json();
 };
 
 const signOut = async id => {
   const url = `${baseUrl}/sign_out`;
-  const response = await fetch(url, {
+  return await handleRequest(url, {
     method: 'POST',
     headers: { 'X-Api-Key': apiKey, 'Content-Type': 'application/json' },
     mode: 'cors',
@@ -48,8 +70,6 @@ const signOut = async id => {
       }
     })
   });
-
-  return await response.json();
 };
 
 export { getVisitors, addVisitor, signOut };
