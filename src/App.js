@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.png";
-import "./App.scss";
-import "./dialog-polyfill.css";
-import { getVisitors, addVisitor, signOut } from "./api";
-import VisitorList from "./VisitorList";
-import NewVisitorDialog from "./newVisitorDialog";
-import SearchVisitor from "./searchVisitor";
+import React, { useEffect, useState } from 'react';
+import logo from './logo.png';
+import './App.scss';
+import './dialog-polyfill.css';
+import { getVisitors, addVisitor, signOut } from './api';
+import VisitorList from './VisitorList';
+import NewVisitorDialog from './newVisitorDialog';
+import SearchVisitor from './searchVisitor';
 
 const App = () => {
   const [visitors, setVisitors] = useState([]);

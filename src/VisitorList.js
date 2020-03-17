@@ -1,10 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { getLocaleDateString } from './utils';
 
 const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
   const renderSignOutUI = (signOut, id) => {
     return signOut ? (
-      signOut
+      getLocaleDateString(signOut)
     ) : (
       <button onClick={() => signOutVisitor(id)}>Sign out</button>
     );
