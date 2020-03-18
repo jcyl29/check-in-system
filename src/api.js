@@ -16,10 +16,8 @@ const handleRequest = async (url, fetchOptions) => {
     if (isPostRequest) {
       // all GET requests should de-cached whenever a POST operation takes place
       cache.clear();
-      console.log('POST request clear cache');
     } else {
       cache.put(key, result);
-      console.log('GET request add to cache, size=', cache.exportJson());
     }
   }
 

@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { getLocaleDateString } from "./utils";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { getLocaleDateString } from './utils';
 
 const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
   const rowsToRender = isFilteredBySignout
