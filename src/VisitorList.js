@@ -1,38 +1,48 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { getLocaleDateString } from './utils';
+import React from "react";
+import PropTypes from "prop-types";
+import { getLocaleDateString } from "./utils";
 
 const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
-  const renderSignOutUI = (signOut, id) => {
+  const rowsToRender = isFilteredBySignout
+    ? data.filter(({ signOut }) => signOut)
+    : data;
+
+  const noRows = rowsToRender.length === 0;
+
+  const renderSignOutUI = (signOut, loading, id) => {
+    const button = loading ? (
+      <button className="sign-out loading">
+        Signing out <i className="fas fa-spinner" />
+      </button>
+    ) : (
+      <button className="sign-out" onClick={() => signOutVisitor(id)}>
+        Sign out
+      </button>
+    );
+
     return signOut ? (
       getLocaleDateString(signOut)
     ) : (
-      <button className="sign-out" onClick={() => signOutVisitor(id)}>Sign out</button>
+      button
     );
   };
-
-  const noRows = data.length === 0;
 
   const renderNoResults = () => <p>No results found</p>;
 
   const renderRows = () => {
-    const result = isFilteredBySignout
-      ? data.filter(({ signOut }) => signOut)
-      : data;
-
-    return result.map(({ id, name, notes, signOut }) => {
+    return rowsToRender.map(({ id, name, notes, signOut, loading }) => {
       return (
         <tr key={id}>
           <td>{name}</td>
           <td>{notes}</td>
-          <td>{renderSignOutUI(signOut, id)}</td>
+          <td>{renderSignOutUI(signOut, loading, id)}</td>
         </tr>
       );
     });
   };
 
   const renderResultsTable = () => (
-    <table className='visitor-list'>
+    <table className="visitor-list">
       <thead>
         <tr>
           <th>Name</th>

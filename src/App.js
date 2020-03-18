@@ -19,13 +19,17 @@ const App = () => {
         id,
         name: attributes.name,
         notes: attributes.notes,
-        signOut: attributes.sign_out
+        signOut: attributes.sign_out,
+        loading: false
       };
     });
     setVisitors(visitorData);
   };
 
   const signOutVisitor = id => {
+    const visitorIndex = visitors.findIndex(data => data.id === id);
+    visitors[visitorIndex].loading = true;
+    setVisitors([...visitors]);
     signOut(id).then(() => {
       queryVisitors();
     });
@@ -45,8 +49,7 @@ const App = () => {
     // by separating all the API requests as individual functions, i am essentially making a IIFE for an async function.
     // i'm trying to do "top-level await"
     // https://v8.dev/features/top-level-await
-
-    // queryVisitors();
+    queryVisitors();
   }, []);
 
   return (
@@ -60,7 +63,7 @@ const App = () => {
           {/*<i className="fas fa-spinner"></i>*/}
         </button>
       </header>
-      <form className='filter-by'>
+      <form className="filter-by">
         <fieldset>
           <legend>Filter by:</legend>
           <input

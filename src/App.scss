@@ -81,11 +81,24 @@ button {
   cursor: pointer;
 }
 
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+.fa-spinner {
+  animation: rotate 1s linear infinite;
+}
+
 .App {
   border: solid 1px var(--gray);
   border-radius: var(--border-radius-1);
   padding: var(--space--5);
 }
+
 input {
   font-family: var(--font-family-monospace);
   border: solid 3px var(--gray);
@@ -139,4 +152,7 @@ header {
   font-size: 0.75rem;
   border: solid 1px var(--gray-dark);
   padding: 0.25rem 0.5rem;
+  &.loading {
+    opacity: .5;
+  }
 }
