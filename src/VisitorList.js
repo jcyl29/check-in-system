@@ -7,7 +7,7 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
     return signOut ? (
       getLocaleDateString(signOut)
     ) : (
-      <button onClick={() => signOutVisitor(id)}>Sign out</button>
+      <button className="sign-out" onClick={() => signOutVisitor(id)}>Sign out</button>
     );
   };
 
@@ -32,7 +32,7 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
   };
 
   const renderResultsTable = () => (
-    <table>
+    <table className='visitor-list'>
       <thead>
         <tr>
           <th>Name</th>

@@ -1,8 +1,142 @@
 @import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
 
-dialog {
-  width: 80%;
-  top: 50%;
-  overflow: hidden;
-  transform: translateY(-50%);
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #dcdcdc;
+  --gray-dark: #343a40;
+  --primary: #ef6661;
+  --secondary: #6f7f8c;
+  --success: #3e4d59;
+  --info: #5c8f94;
+  --warning: #6e9fa5;
+  --danger: #cc330d;
+  --light: #eceeec;
+  --dark: #1e2b37;
+  --space--0: 0;
+  --space--1: 0.25rem;
+  --space--2: 0.5rem;
+  --space--3: 0.75rem;
+  --space--4: 1rem;
+  --space--5: 1.25rem;
+  --space--6: 1.5rem;
+  --space--7: 1.75rem;
+  --space--8: 2rem;
+  --border-radius-1: 0.25rem;
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-monospace);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 1rem;
+  color: var(--gray-dark);
+}
+
+button {
+  font-family: var(--font-family-monospace);
+  background: var(--primary);
+  font-size: 1.5rem;
+  color: var(--white);
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.App {
+  border: solid 1px var(--gray);
+  border-radius: var(--border-radius-1);
+  padding: var(--space--5);
+}
+input {
+  font-family: var(--font-family-monospace);
+  border: solid 3px var(--gray);
+  font-size: 1rem;
+  background: transparent;
+  //width: 100%;
+  padding: 0.25rem;
+}
+
+header {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  //grid-gap: 0 0.5rem;
+}
+
+.add-visitor {
+  justify-self: flex-end;
+  max-width: 15rem;
+  > .fa-user {
+    margin-right: 1rem;
+  }
+}
+.visitor-search {
+  max-width: 15rem;
+  justify-self: flex-end;
+}
+
+.filter-by {
+  margin: 0;
+
+  padding: 0;
+  font-size: 0.75rem;
+}
+
+.visitor-list {
+  width: 100%;
+  margin-top: var(--space--4);
+  border-collapse: collapse;
+  tr:not(:last-of-type) {
+    border-bottom: solid 1px var(--gray);
+  }
+  td {
+    padding: var(--space--1) 0;
+  }
+}
+
+.sign-out {
+  background: transparent;
+  color: var(--gray-dark);
+  font-size: 0.75rem;
+  border: solid 1px var(--gray-dark);
+  padding: 0.25rem 0.5rem;
 }

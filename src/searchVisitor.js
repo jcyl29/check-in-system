@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import './App.scss';
-import './dialog-polyfill.css';
-import useDebounce from './useDebounce';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import "./App.scss";
+import "./dialog-polyfill.css";
+import useDebounce from "./useDebounce";
+import PropTypes from "prop-types";
 
 const SearchVisitor = ({ queryVisitors }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 500);
 
   const handleOnChange = value => {
@@ -26,14 +26,12 @@ const SearchVisitor = ({ queryVisitors }) => {
   }, [debouncedSearch]);
 
   return (
-    <>
-      <form onSubmit={handleOnSubmit}>
-        <input
-          onChange={evt => handleOnChange(evt.target.value)}
-          placeholder="Search full name"
-        />
-      </form>
-    </>
+    <form className="visitor-search" onSubmit={handleOnSubmit}>
+      <input
+        onChange={evt => handleOnChange(evt.target.value)}
+        placeholder="Search full name"
+      />
+    </form>
   );
 };
 

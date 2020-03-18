@@ -1,0 +1,16 @@
+dialog {
+  width: 90%;
+  top: 50%;
+  overflow: hidden;
+  transform: translateY(-50%);
+
+  > .close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
+  }
+  [placeholder*="name"] {
+    margin-right: 1rem;
+  }
+}

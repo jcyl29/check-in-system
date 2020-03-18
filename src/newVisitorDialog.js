@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import './visitorDialog.scss';
 import dialogPolyfill from 'dialog-polyfill';
 import PropTypes from 'prop-types';
 
@@ -66,7 +67,7 @@ const NewVisitorDialog = ({ show, setShowDialog, addNewVisitor }) => {
           <input placeholder="Last name" />
         </p>
         <p>
-        <input placeholder="notes" />
+        <input placeholder="Notes" />
         </p>
         <button type="submit">Save</button>
       </form>

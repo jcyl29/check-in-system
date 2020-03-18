@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.png';
-import './App.scss';
-import './dialog-polyfill.css';
-import { getVisitors, addVisitor, signOut } from './api';
-import VisitorList from './VisitorList';
-import NewVisitorDialog from './newVisitorDialog';
-import SearchVisitor from './searchVisitor';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.png";
+import "./App.scss";
+import "./dialog-polyfill.css";
+import { getVisitors, addVisitor, signOut } from "./api";
+import VisitorList from "./VisitorList";
+import NewVisitorDialog from "./newVisitorDialog";
+import SearchVisitor from "./searchVisitor";
 
 const App = () => {
   const [visitors, setVisitors] = useState([]);
@@ -46,7 +46,7 @@ const App = () => {
     // i'm trying to do "top-level await"
     // https://v8.dev/features/top-level-await
 
-    queryVisitors();
+    // queryVisitors();
   }, []);
 
   return (
@@ -54,20 +54,24 @@ const App = () => {
       <header>
         <img height="50" width="50" alt="logo" src={logo} />
         <SearchVisitor queryVisitors={queryVisitors} />
-        <button onClick={() => setShowDialog(true)}>New Visitor</button>
-        <form>
-          <fieldset>
-            <legend>Filter by:</legend>
-            <input
-              type="checkbox"
-              id="signed-out"
-              onChange={handleCheckBoxOnChange}
-              checked={isFilteredBySignout}
-            />
-            <label htmlFor="signed-out">Signed-out</label>
-          </fieldset>
-        </form>
+        <button className="add-visitor" onClick={() => setShowDialog(true)}>
+          <i className="fas fa-user" />
+          New Visitor
+          {/*<i className="fas fa-spinner"></i>*/}
+        </button>
       </header>
+      <form className='filter-by'>
+        <fieldset>
+          <legend>Filter by:</legend>
+          <input
+            type="checkbox"
+            id="signed-out"
+            onChange={handleCheckBoxOnChange}
+            checked={isFilteredBySignout}
+          />
+          <label htmlFor="signed-out">Signed-out</label>
+        </fieldset>
+      </form>
       <VisitorList
         data={visitors}
         signOutVisitor={signOutVisitor}
