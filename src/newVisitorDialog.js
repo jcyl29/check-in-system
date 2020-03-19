@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 const NewVisitorDialog = ({ show, setShowDialog, addNewVisitor }) => {
   const dialog = useRef(null);
+  const form = useRef(null);
 
   useEffect(() => {
     dialogPolyfill.registerDialog(dialog.current);
@@ -52,6 +53,7 @@ const NewVisitorDialog = ({ show, setShowDialog, addNewVisitor }) => {
 
     if (inputs.every(node => !!node.value.trim())) {
       addNewVisitor({ name, notes }).then(() => {
+        form.current.reset();
         closeModal();
       });
     }
@@ -67,13 +69,13 @@ const NewVisitorDialog = ({ show, setShowDialog, addNewVisitor }) => {
         autoFocus
       />
       <h1>Please enter visitor details</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={form}>
         <p>
-          <input id='first-name' placeholder="First name" />
-          <input id='last-name' placeholder="Last name" />
+          <input id="first-name" placeholder="First name" />
+          <input id="last-name" placeholder="Last name" />
         </p>
         <p>
-          <input id='notes' placeholder="Notes" />
+          <input id="notes" placeholder="Notes" />
         </p>
         <button type="submit">Save</button>
       </form>
