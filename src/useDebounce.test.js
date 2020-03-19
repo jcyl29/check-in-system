@@ -22,7 +22,7 @@ describe('useDebounce', () => {
         initialProps: { initialValue: 'abc' }
       }
     );
-    
+
     rerender({ initialValue: 'def' });
     expect(result.current).toBe('abc');
     act(() => {

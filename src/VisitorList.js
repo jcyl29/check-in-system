@@ -7,6 +7,7 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
     ? data.filter(({ signOut }) => signOut)
     : data;
 
+  console.log("data", data)
   const noRows = rowsToRender.length === 0;
 
   const renderSignOutUI = (signOut, loading, id) => {
