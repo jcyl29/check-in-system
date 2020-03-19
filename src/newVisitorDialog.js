@@ -58,7 +58,7 @@ const NewVisitorDialog = ({ show, setShowDialog, addNewVisitor }) => {
   };
 
   return (
-    <dialog ref={dialog}>
+    <dialog ref={dialog} open={show}>
       <i
         role="button"
         aria-hidden="true"
