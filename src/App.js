@@ -4,8 +4,8 @@ import './App.scss';
 import './dialog-polyfill.css';
 import { getVisitors, addVisitor, signOut } from './api';
 import VisitorList from './VisitorList';
-import NewVisitorDialog from './newVisitorDialog';
-import SearchVisitor from './searchVisitor';
+import NewVisitorDialog from './NewVisitorDialog';
+import SearchVisitor from './SearchVisitor';
 
 const App = () => {
   const [visitors, setVisitors] = useState([]);
@@ -56,12 +56,13 @@ const App = () => {
     <div className="App">
       <header>
         <img height="50" width="50" alt="logo" src={logo} />
-        <SearchVisitor queryVisitors={queryVisitors} />
-        <button className="add-visitor" onClick={() => setShowDialog(true)}>
-          <i className="fas fa-user" />
-          New Visitor
-          {/*<i className="fas fa-spinner"></i>*/}
-        </button>
+        <div className="search-add">
+          <SearchVisitor queryVisitors={queryVisitors} />
+          <button className="add-visitor" onClick={() => setShowDialog(true)}>
+            <i className="fas fa-user" />
+            New Visitor
+          </button>
+        </div>
       </header>
       <form className="filter-by">
         <fieldset>

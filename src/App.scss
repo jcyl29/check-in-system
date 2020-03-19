@@ -111,20 +111,20 @@ input {
 header {
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
-  //grid-gap: 0 0.5rem;
+  grid-template-columns: 1fr 1fr;
 }
 
-.add-visitor {
+.search-add {
   justify-self: flex-end;
-  max-width: 15rem;
-  > .fa-user {
-    margin-right: 1rem;
-  }
 }
+
+.add-visitor,
 .visitor-search {
-  max-width: 15rem;
-  justify-self: flex-end;
+  display: inline-block;
+}
+
+.visitor-search {
+  margin-right: var(--space--4);
 }
 
 .filter-by {
@@ -153,6 +153,6 @@ header {
   border: solid 1px var(--gray-dark);
   padding: 0.25rem 0.5rem;
   &.loading {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
