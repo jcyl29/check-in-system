@@ -1,4 +1,4 @@
-const getLocaleDateString = (
+const getLocaleTimeString = (
   dateString,
   locale = 'en-US',
   options = {
@@ -8,6 +8,6 @@ const getLocaleDateString = (
     day: 'numeric',
     timeZone: 'UTC'
   }
-) => new Date(dateString).toLocaleDateString(locale, options);
+) => new Date(dateString).toLocaleTimeString(locale, options);
 
-export { getLocaleDateString };
+export { getLocaleTimeString };

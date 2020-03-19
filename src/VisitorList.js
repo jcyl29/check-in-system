@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLocaleDateString } from './utils';
+import { getLocaleTimeString } from './utils';
 
 const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
   const rowsToRender = isFilteredBySignout
@@ -21,7 +21,7 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
     );
 
     return signOut ? (
-      getLocaleDateString(signOut)
+      getLocaleTimeString(signOut)
     ) : (
       button
     );
