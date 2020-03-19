@@ -11,8 +11,6 @@ const NewVisitorDialog = ({ show, setShowDialog, addNewVisitor }) => {
     dialogPolyfill.registerDialog(dialog.current);
     dialog.current.addEventListener('close', () => {
       // need to update the parent container state representation of this dialog.
-      // otherwise this will cause a bug where clicking the same movie after closing
-      // dialog won't open the dialog
       setShowDialog(false);
     });
   }, [setShowDialog]);

@@ -3,7 +3,7 @@ const baseUrl = 'https://mini-visitors-service.herokuapp.com/api/entries';
 const apiKey = process.env.REACT_APP_X_API_KEY;
 
 const handleRequest = async (url, fetchOptions) => {
-  // the get visitor and add visitor have the same url, so need
+  // the get visitor and add visitor endpoints have the same url, so need
   // differentiate key with their methods
   const key = `__cache__${fetchOptions.method}__${url}`;
   let result = cache.get(key);
