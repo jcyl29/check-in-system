@@ -8,13 +8,12 @@ const handleRequest = async (url, fetchOptions) => {
   const key = `__cache__${fetchOptions.method}__${url}`;
   let result = cache.get(key);
 
-
   if (!result) {
     const response = await fetch(url, fetchOptions);
     const isPostRequest = fetchOptions.method === 'POST';
     result = response.json();
     if (isPostRequest) {
-      // all GET requests should de-cached whenever a POST operation takes place
+      // all GET requests should de-cache whenever a POST operation takes place
       cache.clear();
     } else {
       cache.put(key, result);
@@ -29,13 +28,11 @@ const getVisitors = async filterOptions => {
     ? `${baseUrl}?filter[name]=${filterOptions.name}`
     : baseUrl;
 
-  const response = await handleRequest(url, {
+  return await handleRequest(url, {
     method: 'GET',
     headers: { 'X-Api-Key': apiKey },
     mode: 'cors'
   });
-
-  return response;
 };
 
 const addVisitor = async ({ name, notes }) => {

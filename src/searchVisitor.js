@@ -28,6 +28,7 @@ const SearchVisitor = ({ queryVisitors }) => {
   return (
     <form className="visitor-search" onSubmit={handleOnSubmit}>
       <input
+        id="search-visitor"
         onChange={evt => handleOnChange(evt.target.value)}
         placeholder="Search full name"
       />

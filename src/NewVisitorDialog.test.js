@@ -47,7 +47,7 @@ describe('<NewVisitorDialog />', () => {
       const { container } = render(getMockedComponent(overrides));
       const form = container.querySelector('form');
 
-      Object.entries(formData).forEach(([selector, value], b) => {
+      Object.entries(formData).forEach(([selector, value]) => {
         const el = form.querySelector(selector);
         fireEvent.change(el, { target: { value } });
         expect(el.value).toBe(value);
