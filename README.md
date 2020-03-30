@@ -32,7 +32,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ### Listing visitors
 - As an employee
     - When I open the application
-    - Then I can see a list of all Cool Chip visitors
+    - Then I can see a list of all the visitors
         - And I can see each of their first names
         - And I can see each of their last names
         - And I can see each of their signed out statuses    
@@ -44,7 +44,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 - Then the visitor is marked as signed out
 ### Add a new visitor:
 - As en employee
-    -that is viewing the visitors list
+    - that is viewing the visitors list
 - When I click "Add a new visitor"
     - And I provide the first name of the visitor
     - And I provide the last name of the visitor
