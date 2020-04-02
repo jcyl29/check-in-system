@@ -89,6 +89,7 @@ const App = () => {
         visitorData={visitors}
         signOutVisitor={signOutVisitor}
         isFilteredBySignout={isFilteredBySignout}
+        maxRows={process.env.REACT_APP_RESULTS_PER_PAGE}
       />
       <PageControls
         totalPages={visitors.totalPages}
@@ -100,7 +101,6 @@ const App = () => {
         setShowDialog={setShowDialog}
         addNewVisitor={addNewVisitor}
       />
-      <pre>{JSON.stringify(visitors, undefined, 2)}</pre>
     </div>
   );
 };

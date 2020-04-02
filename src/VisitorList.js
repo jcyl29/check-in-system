@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getLocaleTimeString } from './utils';
 
-const VisitorList = ({ visitorData, signOutVisitor, isFilteredBySignout }) => {
+const VisitorList = ({
+  visitorData,
+  signOutVisitor,
+  isFilteredBySignout,
+  maxRows,
+}) => {
   const rowsToRender = isFilteredBySignout
     ? visitorData.data.filter(({ signOut }) => signOut)
     : visitorData.data;
-  
+
   const noRows = rowsToRender.length === 0;
 
   const renderSignOutUI = (signOut, loading, id) => {
@@ -20,11 +25,7 @@ const VisitorList = ({ visitorData, signOutVisitor, isFilteredBySignout }) => {
       </button>
     );
 
-    return signOut ? (
-      getLocaleTimeString(signOut)
-    ) : (
-      button
-    );
+    return signOut ? getLocaleTimeString(signOut) : button;
   };
 
   const renderNoResults = () => <p>No results found</p>;
@@ -41,6 +42,21 @@ const VisitorList = ({ visitorData, signOutVisitor, isFilteredBySignout }) => {
     });
   };
 
+  const renderEmptyRows = () => {
+    const validRowsCount = rowsToRender.length;
+    if (validRowsCount === maxRows) {
+      return;
+    }
+
+    return [...Array(maxRows - validRowsCount)].map((_, i) => {
+      return (
+        <tr key={`empty-row-${i}`}>
+          <td>&nbsp;</td>
+        </tr>
+      );
+    });
+  };
+
   const renderResultsTable = () => (
     <table className="visitor-list">
       <thead>
@@ -50,7 +66,10 @@ const VisitorList = ({ visitorData, signOutVisitor, isFilteredBySignout }) => {
           <th>Signed out</th>
         </tr>
       </thead>
-      <tbody>{renderRows()}</tbody>
+      <tbody>
+        {renderRows()}
+        {renderEmptyRows()}
+      </tbody>
     </table>
   );
 
@@ -63,11 +82,12 @@ VisitorList.propTypes = {
       id: PropTypes.number,
       name: PropTypes.string,
       notes: PropTypes.string,
-      signOut: PropTypes.string
+      signOut: PropTypes.string,
     })
   ).isRequired,
   signOutVisitor: PropTypes.func.isRequired,
-  isFilteredBySignout: PropTypes.bool.isRequired
+  isFilteredBySignout: PropTypes.bool.isRequired,
+  maxRows: PropTypes.number.isRequired,
 };
 
 export default VisitorList;
