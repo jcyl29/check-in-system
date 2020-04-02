@@ -1,18 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const PageControls = ({ totalPages, currentPage, onPrevPage, onNextPage }) => {
+const PageControls = ({
+  totalPages,
+  currentPage = 1,
+  onPrevPage,
+  onNextPage,
+}) => {
   const show = totalPages > 1;
   const [page, setPage] = useState(currentPage);
 
   const handlePrevious = page => {
     setPage(page);
-    onPrevPage();
+    onPrevPage(page);
   };
 
   const handleNext = page => {
     setPage(page);
-    onNextPage();
+    onNextPage(page);
+  };
+
+  const handleInputOnChange = p => {
+    if ([isNaN(p), p < 0, p > totalPages].some(condition => condition)) {
+      return;
+    }
+
+    if (p > page) {
+      onNextPage(p);
+    } else {
+      onPrevPage(p);
+    }
+    setPage(p);
   };
 
   const renderButtons = () => (
@@ -23,17 +41,18 @@ const PageControls = ({ totalPages, currentPage, onPrevPage, onNextPage }) => {
       <button disabled={page === 1} onClick={() => handlePrevious(page - 1)}>
         <i className="fas fa-backward" />
       </button>
-      <form>
-        <input
-          type="number"
-          value={page}
-          min={1}
-          max={totalPages}
-          onChange={({ target: { value } }) => {
-            setPage(parseInt(value, 10));
-          }}
-        />
-      </form>
+
+      <input
+        type="number"
+        value={page}
+        min={1}
+        size={3}
+        max={totalPages}
+        onChange={({ target: { value } }) => {
+          handleInputOnChange(parseInt(value, 10));
+        }}
+      />
+
       <button
         disabled={page === totalPages}
         onClick={() => handleNext(page + 1)}
@@ -60,6 +79,7 @@ PageControls.propTypes = {
 };
 
 PageControls.defaultProps = {
+  currentPage: 1,
   onPrevPage: () => {},
   onNextPage: () => {},
 };

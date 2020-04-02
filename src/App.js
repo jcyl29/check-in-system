@@ -12,9 +12,13 @@ const App = () => {
   const [visitors, setVisitors] = useState({ totalPages: 0, data: [] });
   const [showDialog, setShowDialog] = useState(false);
   const [isFilteredBySignout, setIsFilteredBySignout] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const queryVisitors = async (filterOptions = {}) => {
+  const getResultsByPage = ({ page = 1, data }) => {
+    const resultsPerPage = process.env.REACT_APP_RESULTS_PER_PAGE;
+    return data.slice((page - 1) * resultsPerPage,  page * resultsPerPage);
+  };
+
+  const queryVisitors = async (filterOptions = {}, page = 1) => {
     const response = await getVisitors(filterOptions);
     const visitorData = response.data.map(({ id, attributes }) => {
       return {
@@ -25,7 +29,10 @@ const App = () => {
         loading: false,
       };
     });
-    setVisitors({ totalPages: visitorData.length, data: visitorData });
+    setVisitors({
+      totalPages: Math.ceil(visitorData.length / process.env.REACT_APP_RESULTS_PER_PAGE),
+      data: getResultsByPage({ page, data: visitorData }),
+    });
   };
 
   const signOutVisitor = id => {
@@ -85,7 +92,8 @@ const App = () => {
       />
       <PageControls
         totalPages={visitors.totalPages}
-        currentPage={currentPage}
+        onNextPage={page => queryVisitors({}, page)}
+        onPrevPage={page => queryVisitors({}, page)}
       />
       <NewVisitorDialog
         show={showDialog}
