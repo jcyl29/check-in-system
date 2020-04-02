@@ -8,7 +8,7 @@ import NewVisitorDialog from './NewVisitorDialog';
 import SearchVisitor from './SearchVisitor';
 
 const App = () => {
-  const [visitors, setVisitors] = useState([]);
+  const [visitors, setVisitors] = useState({ totalPages: 0, data: [] });
   const [showDialog, setShowDialog] = useState(false);
   const [isFilteredBySignout, setIsFilteredBySignout] = useState(false);
 
@@ -20,7 +20,7 @@ const App = () => {
         name: attributes.name,
         notes: attributes.notes,
         signOut: attributes.sign_out,
-        loading: false
+        loading: false,
       };
     });
     setVisitors(visitorData);
@@ -86,6 +86,7 @@ const App = () => {
         setShowDialog={setShowDialog}
         addNewVisitor={addNewVisitor}
       />
+      <pre>{JSON.stringify(visitors, undefined, 2)}</pre>
     </div>
   );
 };
