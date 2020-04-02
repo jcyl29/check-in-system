@@ -6,11 +6,13 @@ import { getVisitors, addVisitor, signOut } from './api';
 import VisitorList from './VisitorList';
 import NewVisitorDialog from './NewVisitorDialog';
 import SearchVisitor from './SearchVisitor';
+import PageControls from './PageControls';
 
 const App = () => {
   const [visitors, setVisitors] = useState({ totalPages: 0, data: [] });
   const [showDialog, setShowDialog] = useState(false);
   const [isFilteredBySignout, setIsFilteredBySignout] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const queryVisitors = async (filterOptions = {}) => {
     const response = await getVisitors(filterOptions);
@@ -23,7 +25,7 @@ const App = () => {
         loading: false,
       };
     });
-    setVisitors(visitorData);
+    setVisitors({ totalPages: visitorData.length, data: visitorData });
   };
 
   const signOutVisitor = id => {
@@ -77,9 +79,13 @@ const App = () => {
         </fieldset>
       </form>
       <VisitorList
-        data={visitors}
+        visitorData={visitors}
         signOutVisitor={signOutVisitor}
         isFilteredBySignout={isFilteredBySignout}
+      />
+      <PageControls
+        totalPages={visitors.totalPages}
+        currentPage={currentPage}
       />
       <NewVisitorDialog
         show={showDialog}

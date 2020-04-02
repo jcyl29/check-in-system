@@ -97,6 +97,10 @@ button {
   border: solid 1px var(--gray);
   border-radius: var(--border-radius-1);
   padding: var(--space--5);
+
+  [disabled] {
+    opacity: .5;
+  }
 }
 
 input {

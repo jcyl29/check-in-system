@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getLocaleTimeString } from './utils';
 
-const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
+const VisitorList = ({ visitorData, signOutVisitor, isFilteredBySignout }) => {
   const rowsToRender = isFilteredBySignout
-    ? data.filter(({ signOut }) => signOut)
-    : data;
-
+    ? visitorData.data.filter(({ signOut }) => signOut)
+    : visitorData.data;
+  
   const noRows = rowsToRender.length === 0;
 
   const renderSignOutUI = (signOut, loading, id) => {
@@ -58,7 +58,7 @@ const VisitorList = ({ data, signOutVisitor, isFilteredBySignout }) => {
 };
 
 VisitorList.propTypes = {
-  data: PropTypes.arrayOf(
+  visitorData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
